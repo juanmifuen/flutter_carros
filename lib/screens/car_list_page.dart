@@ -29,10 +29,22 @@ class _CarListPageState extends State<CarListPage> {
     });
   }
 
+  void _logout() {
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Mis Carros')),
+      appBar: AppBar(
+        title: Text('Mis Carros'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: _logout,
+          )
+        ],
+      ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
