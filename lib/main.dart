@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/login.page.dart';
 import 'screens/car_list_page.dart';
+import 'screens/car_detail_page.dart';
+import 'screens/qr_scanner_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +20,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
+        '/home': (context) => CarListPage(),
+        '/car_detail': (context) => CarDetailPage(),
+        '/qr': (context) => QRScannerPage(),
       },
     );
   }
 }
+
+

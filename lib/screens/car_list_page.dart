@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import '../services/car_service.dart';
 import '../widgets/car_item.dart';
+import 'qr_scanner_page.dart';
 
 class CarListPage extends StatefulWidget {
-  final String token;
-
-  CarListPage({required this.token});
-
   @override
   _CarListPageState createState() => _CarListPageState();
 }
@@ -22,7 +19,7 @@ class _CarListPageState extends State<CarListPage> {
   }
 
   Future<void> _fetchCars() async {
-    final fetchedCars = await CarService.getCars(widget.token);
+    final fetchedCars = await CarService.getCars();
     setState(() {
       cars = fetchedCars;
       _isLoading = false;
@@ -33,12 +30,23 @@ class _CarListPageState extends State<CarListPage> {
     Navigator.pushReplacementNamed(context, '/');
   }
 
+  void _scanQR() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QRScannerPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mis Carros'),
         actions: [
+          IconButton(
+            icon: Icon(Icons.qr_code_scanner),
+            onPressed: _scanQR,
+          ),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: _logout,

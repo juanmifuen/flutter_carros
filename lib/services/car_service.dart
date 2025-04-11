@@ -2,17 +2,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CarService {
-  static Future<List> getCars(String token) async {
-    final response = await http.get(
-      Uri.parse('https://carros-electricos.wiremockapi.cloud/carros'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
-
+  static Future<List> getCars() async {
+    final response = await http.get(Uri.parse('https://67f7d1812466325443eadd17.mockapi.io/carros'));
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return json.decode(response.body);
     } else {
-      print("Error: ${response.statusCode}, ${response.body}");
-      return [];
+      throw Exception('Fallo al cargar los carros');
     }
   }
 }

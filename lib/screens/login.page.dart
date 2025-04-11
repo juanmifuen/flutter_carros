@@ -1,30 +1,55 @@
 import 'package:flutter/material.dart';
-import '../widgets/login_form.dart';
-import '../services/auth_service.dart';
-import 'car_list_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  String _error = '';
+
+  void _login() {
+    final user = _usernameController.text.trim();
+    final pass = _passwordController.text.trim();
+    if (user == 'admin' && pass == 'admin') {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      setState(() {
+        _error = 'Usuario o contraseña incorrectos';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: LoginForm(
-            onLogin: (username, password) async {
-              String? token = await AuthService.login(username, password);
-              if (token != null) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => CarListPage(token: token)),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Credenciales incorrectas")),
-                );
-              }
-            },
-          ),
+      appBar: AppBar(title: Text('Iniciar Sesión')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(labelText: 'Usuario'),
+            ),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: InputDecoration(labelText: 'Contraseña'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _login,
+              child: Text('Ingresar'),
+            ),
+            if (_error.isNotEmpty) ...[
+              SizedBox(height: 10),
+              Text(_error, style: TextStyle(color: Colors.red)),
+            ]
+          ],
         ),
       ),
     );

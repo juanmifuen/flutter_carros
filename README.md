@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  qr_code_scanner: ^1.0.1  # o la última versión disponible
